@@ -23,34 +23,39 @@
         </div>
     </div>
     <div>
-        <p class="greeting-message">codigo de mierda</p>
+        <p class="greeting-message"></p>
     </div>
+    <script src="http://chancejs.com/chance.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+
 
     <script>
-    let num1 = Math.floor(Math.random() * 100);
-    let num2 = Math.floor(Math.random() * 100);
-    let texto = document.querySelector(".greeting-message");
-    document.querySelector("#primary-number").textContent = num1;
-    document.querySelector("#secondary-number").textContent = num2;
+        // Quiero un número entre 1 y 100
 
-    // Escuchar el click en el botón de check y comprobar la respuesta del usuario
-    let btn = document.querySelector("#btn");
-    btn.addEventListener("click", function() {
-    let guess = parseInt(document.querySelector("#guess").value);
-    if (guess === num1 + num2) {
-    texto.style.display = "block";
-    texto.textContent = "¡Correcto!";
-    texto.style.backgroundColor = "green";
-    } else {
-    texto.style.display = "block";
-    texto.style.backgroundColor = "red";
-    texto.textContent = `Incorrecto. La respuesta era ${num1 + num2}.`;
-    }
-    document.querySelector("#guess").value = '';
-    });
-        
+        let num1 = chance.integer({ min: 1, max: 100 }); // 1. Math.random
+        let num2 = chance.integer({ min: 1, max: 100 }); // 2. Math.random
+
+        // 3. - 2 líneas de código usando adecuadamente querySelector
+        $('#primary-number').text(num1);
+        $('#secondary-number').text(num2);
+
+
+        // 4. - addEventListener. NO hace falta un evento 'submit' aquí porque no estamos gestionando un <form>. Escuchar el evento 'click' es suficiente
+            $('#btn').on('click', () => {
+            let val1 = +$('#primary-number').text();
+            let val2 = +$('#secondary-number').text();
+
+            if ((val1 + val2) == $('#guess').val()) {
+                console.log('ok!');
+                $('.greeting-message').text('Congrats!');
+                $('.greeting-message').show();
+                $('.greeting-message').css('color', 'green')
+            }
+        });
+
+
     </script>
 </body>
 
 </html>
-
